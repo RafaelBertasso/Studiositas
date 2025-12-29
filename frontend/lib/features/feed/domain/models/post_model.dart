@@ -5,6 +5,8 @@ class PostModel {
   final String duration;
   final String description;
   final DateTime createdAt;
+  final int likesCount;
+  final int commentsCount;
 
   PostModel({
     this.id,
@@ -13,6 +15,8 @@ class PostModel {
     required this.duration,
     required this.description,
     required this.createdAt,
+    this.likesCount = 0,
+    this.commentsCount = 0,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +27,8 @@ class PostModel {
       duration: json['duration'],
       description: json['description'],
       createdAt: DateTime.parse(json['createdAt']),
+      likesCount: json['likesCount'] ?? 0,
+      commentsCount: json['commentsCount'] ?? 0,
     );
   }
 
@@ -33,6 +39,8 @@ class PostModel {
       "duration": duration,
       "description": description,
       "createdAt": createdAt.toIso8601String(),
+      "likesCount": likesCount,
+      "commentsCount": commentsCount,
     };
   }
 }

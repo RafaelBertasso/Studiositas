@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:studiositas/core/theme/app_theme.dart';
-// import 'package:studiositas/injection.dart';
+import 'package:studiositas/features/feed/presentation/pages/feed_page.dart';
+import 'package:studiositas/injection.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupInjection();
+
   await initializeDateFormatting('pt_BR', null);
-
-  // setupInjections();
-
   runApp(const Studiositas());
 }
 
@@ -20,7 +21,7 @@ class Studiositas extends StatelessWidget {
       title: 'Studiositas',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const PlaceholderScreen(),
+      home: FeedPage(),
     );
   }
 }
