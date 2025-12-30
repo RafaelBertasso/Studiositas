@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:studiositas/features/auth/data/auth_repository.dart';
 import 'package:studiositas/features/auth/data/auth_service.dart';
+import 'package:studiositas/features/auth/presentation/pages/register_page.dart';
 import 'package:studiositas/features/feed/presentation/pages/feed_page.dart';
 import 'package:studiositas/injection.dart';
 
@@ -159,12 +161,15 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () async {
                           final authService = getIt<AuthService>();
+                          final authRepository = getIt<AuthRepository>();
+
                           final user = await authService.login(
                             _emailController.text,
                             _passwordController.text,
                           );
 
                           if (user != null) {
+                            await authRepository.saveUserSession(user['id']);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -205,7 +210,14 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Text('Não tem uma conta? '),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterPage(),
+                                ),
+                              );
+                            },
                             child: Text(
                               'Criar',
                               style: TextStyle(

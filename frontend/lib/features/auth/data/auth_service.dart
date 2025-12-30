@@ -20,4 +20,17 @@ class AuthService {
       return null;
     }
   }
+
+  Future<bool> register(String name, String email, String password) async {
+    try {
+      final response = await _dio.post(
+        '/auth/register',
+        data: {'name': name, 'email': email, 'passwordHash': password},
+      );
+      return response.statusCode == 200;
+    } catch (e) {
+      print('Erro de registro: $e');
+      return false;
+    }
+  }
 }

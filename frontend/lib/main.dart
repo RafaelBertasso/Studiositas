@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:studiositas/core/theme/app_theme.dart';
+import 'package:studiositas/features/auth/data/auth_repository.dart';
 import 'package:studiositas/features/auth/presentation/pages/login_page.dart';
 import 'package:studiositas/features/feed/presentation/pages/feed_page.dart';
 import 'package:studiositas/injection.dart';
@@ -9,12 +10,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupInjection();
 
+  final authRepo = getIt<AuthRepository>();
+  final int? userId = await authRepo.getUserId();
+
   await initializeDateFormatting('pt_BR', null);
-  runApp(const Studiositas());
+  runApp(Studiositas(isLoggedIn: userId != null));
 }
 
 class Studiositas extends StatelessWidget {
-  const Studiositas({super.key});
+  final bool isLoggedIn;
+  const Studiositas({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class Studiositas extends StatelessWidget {
         '/feed': (context) => const FeedPage(),
         '/login': (context) => const LoginPage(),
       },
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }
