@@ -33,4 +33,16 @@ class AuthService {
       return false;
     }
   }
+
+  Future<String?> forgotPassword(String email) async {
+    try {
+      final response = await _dio.post(
+        '/auth/forgot-password',
+        data: {'email': email},
+      );
+      return response.data['message'];
+    } on DioException catch (e) {
+      return e.response?.data['message'] ?? 'Erro ao processar solicitação.';
+    }
+  }
 }

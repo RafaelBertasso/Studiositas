@@ -1,5 +1,8 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Studiositas.API.Application.Features.Posts.Commands.CreatePost;
+using Studiositas.API.Application.Features.Posts.Queries.GetFeed;
 using Studiositas.API.Data;
 using Studiositas.API.Models;
 
@@ -7,27 +10,25 @@ namespace Studiositas.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PostController : ControllerBase
+public class PostController(IMediator mediator) : ControllerBase
 {
-    private readonly AppDbContext _context;
-
-    public PostController(AppDbContext context)
-    {
-        _context = context;
-    }
+    private readonly IMediator _mediator = mediator;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<StudyPost>>> GetPosts()
+    public async Task<IActionResult> GetFeed()
     {
-        return await _context.StudyPosts.OrderByDescending(p => p.CreatedAt).ToListAsync();
+        var query = new GetFeedQuery();
+
+        var posts = await _mediator.Send(query);
+
+        return Ok(posts);
     }
 
     [HttpPost]
-    public async Task<ActionResult<StudyPost>> PostStudy(StudyPost post)
+    public async Task<ActionResult> CreateStudy([FromBody] CreatePostCommand command)
     {
-        _context.StudyPosts.Add(post);
-        await _context.SaveChangesAsync();
+        var postId = await _mediator.Send(command);
 
-        return CreatedAtAction(nameof(GetPosts), new { id = post.Id }, post);
+        return Ok(new { message = "Post criado com sucesso!", id = postId });
     }
 }

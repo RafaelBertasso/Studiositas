@@ -167,8 +167,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             }),
                             icon: Icon(
                               _isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                             ),
                           ),
                         ),
@@ -199,8 +199,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             }),
                             icon: Icon(
                               _isConfirmPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                             ),
                           ),
                         ),

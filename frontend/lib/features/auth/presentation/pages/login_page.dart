@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studiositas/features/auth/data/auth_repository.dart';
 import 'package:studiositas/features/auth/data/auth_service.dart';
+import 'package:studiositas/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:studiositas/features/auth/presentation/pages/register_page.dart';
 import 'package:studiositas/features/feed/presentation/pages/feed_page.dart';
 import 'package:studiositas/injection.dart';
@@ -127,8 +128,8 @@ class _LoginPageState extends State<LoginPage> {
                           }),
                           icon: Icon(
                             _isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
                         ),
                         border: OutlineInputBorder(
@@ -141,7 +142,14 @@ class _LoginPageState extends State<LoginPage> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ForgotPasswordPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           'Esqueceu a senha?',
                           style: TextStyle(color: Color(0xFF4A6B8A)),

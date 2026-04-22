@@ -4,7 +4,7 @@ class DioClient {
   static Dio get instance {
     return Dio(
       BaseOptions(
-        baseUrl: 'http://localhost:5147/api',
+        baseUrl: 'http://10.0.2.2:5147/api',
         contentType: 'application/json',
       )
     );
